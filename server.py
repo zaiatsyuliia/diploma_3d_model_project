@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, render_template
 from flask_cors import CORS
 import os
 import tempfile
@@ -39,6 +39,10 @@ def cleanup_file(path):
     """Видалення файлу якщо існує"""
     if os.path.exists(path):
         os.unlink(path)
+
+@app.route('/')
+def index():
+    return render_template('create_model.html')
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -138,8 +142,4 @@ def process_image_only():
         return jsonify({"error": f"Помилка обробки: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    print("Запуск Flask сервера...")
-    print("Сервер доступний на http://localhost:5000")
-    print("Для зупинки натисніть Ctrl+C")
-    
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8000)
