@@ -9,7 +9,7 @@ import base64
 from depth_map import DepthMap
 from create_3dmodel import ImageTo3D
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 CORS(app)
 model_3d = ImageTo3D()
 
