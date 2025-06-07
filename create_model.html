@@ -48,7 +48,7 @@
     </div>
 
     <script>
-        const API = 'http://localhost:5000';
+        const API = window.location.protocol + '//' + window.location.host;
         let scene, camera, renderer, mesh, imageFile, modelData;
         let autoRotate = false, mouseDown = false, rightClick = false;
         let mouseX = 0, mouseY = 0, rotX = 0, rotY = 0, targetRotX = 0, targetRotY = 0;
