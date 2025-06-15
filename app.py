@@ -9,7 +9,7 @@ import base64
 from depth_map import DepthMap
 from create_3dmodel import ImageTo3D
 
-app = Flask(__name__, static_folder='static')
+app = Flask(__name__)
 CORS(app)
 model_3d = ImageTo3D()
 
@@ -142,5 +142,4 @@ def process_image_only():
         return jsonify({"error": f"Помилка обробки: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=8000, debug=True)

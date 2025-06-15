@@ -48,7 +48,6 @@
     </div>
 
     <script>
-        const API = window.location.protocol + '//' + window.location.host;
         let scene, camera, renderer, mesh, imageFile, modelData;
         let autoRotate = false, mouseDown = false, rightClick = false;
         let mouseX = 0, mouseY = 0, rotX = 0, rotY = 0, targetRotX = 0, targetRotY = 0;
@@ -62,7 +61,7 @@
         async function checkServer() {
             const s = document.getElementById('serverStatus');
             try {
-                await fetch(`${API}/health`);
+                await fetch('/health');
                 s.textContent = 'Сервер онлайн';
                 s.style.color = 'green';
             } catch {
@@ -171,7 +170,7 @@
                 formData.append('image', imageFile);
                 formData.append('model_type', document.getElementById('model').value);
                 
-                const res = await fetch(`${API}/process_image`, { method: 'POST', body: formData });
+                const res = await fetch('/process_image', { method: 'POST', body: formData });
                 const data = await res.json();
                 
                 if (data.error) throw new Error(data.error);
@@ -202,7 +201,7 @@
                 formData.append('base_thickness', document.getElementById('thickness').value);
                 formData.append('model_type', document.getElementById('model').value);
                 
-                const res = await fetch(`${API}/generate_3d`, { method: 'POST', body: formData });
+                const res = await fetch('/generate_3d', { method: 'POST', body: formData });
                 const data = await res.json();
                 
                 if (data.error) throw new Error(data.error);
@@ -266,7 +265,7 @@
             if (!modelData) return null;
             
             try {
-                const res = await fetch(`${API}/download_model`, {
+                const res = await fetch('/download_model', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(modelData)
