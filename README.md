@@ -34,7 +34,7 @@ python server.py
 
    ![image](https://github.com/user-attachments/assets/7ab7d65b-985a-4128-9e1f-3dc8252a44f8)
 
-## Структура проекту
+## Структура проєкту
 ```
 ├── server.py              # Flask сервер
 ├── depth_map.py           # Генерація карт глибини
