@@ -28,8 +28,8 @@ python server.py
    ![image](https://github.com/user-attachments/assets/cd09b38d-e7ab-4f35-9b57-c5614c9aba02)
 4. Перегляд результату
 
-   ![image](https://github.com/user-attachments/assets/544b2494-b261-4cb7-ac66-920b53972b98)
-   ![image](https://github.com/user-attachments/assets/08194e0d-a86f-4b86-9ec7-e34ebf3505c3)
+   ![image](https://github.com/user-attachments/assets/d274e44b-cf9c-4516-8c51-9159f1ec4302)
+   ![image](https://github.com/user-attachments/assets/b302512c-5b8c-4e6f-a7fd-b3f95c6da3eb)
 5. Завантажте OBJ файл
 
    ![image](https://github.com/user-attachments/assets/7ab7d65b-985a-4128-9e1f-3dc8252a44f8)
