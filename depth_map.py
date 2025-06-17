@@ -12,30 +12,33 @@ class DepthMap:
         self.model = None
         self.transform = None
         self.feature_extractor = None
+        self.model_loaded = False
 
     def load_model(self):
         try:
-            if self.model_type == "DPT_Large":
-                try:
-                    from transformers import DPTForDepthEstimation, DPTFeatureExtractor
-                    self.model = DPTForDepthEstimation.from_pretrained("Intel/dpt-large")
-                    self.feature_extractor = DPTFeatureExtractor.from_pretrained("Intel/dpt-large")
-                    self.model.to(self.device).eval()
-                    print("DPT модель завантажена")
-                    return
-                except:
-                    pass
-            
-            torch.hub.set_dir('./models')
-            self.model = torch.hub.load("intel-isl/MiDaS", self.model_type, trust_repo=True)
-            self.model.to(self.device).eval()
-            transforms = torch.hub.load("intel-isl/MiDaS", "transforms", trust_repo=True)
-            self.transform = transforms.dpt_transform if "DPT" in self.model_type else transforms.small_transform
-            print(f"Модель {self.model_type} завантажена")
+            # Спочатку пробуємо завантажити через torch.hub (для всіх MiDaS моделей)
+            if self.model_type in ["DPT_Large", "DPT_Hybrid", "MiDaS_small"]:
+                print(f"Завантаження {self.model_type} через torch.hub...")
+                torch.hub.set_dir('./models')
+                self.model = torch.hub.load("intel-isl/MiDaS", self.model_type, trust_repo=True)
+                self.model.to(self.device).eval()
+                
+                # Завантажуємо відповідні трансформації
+                transforms = torch.hub.load("intel-isl/MiDaS", "transforms", trust_repo=True)
+                if "DPT" in self.model_type:
+                    self.transform = transforms.dpt_transform
+                else:
+                    self.transform = transforms.small_transform
+                
+                self.model_loaded = True
+                print(f"Модель {self.model_type} успішно завантажена")
+                return
             
         except Exception as e:
-            print(f"Використовуємо простий алгоритм: {e}")
+            print(f"Помилка завантаження моделі {self.model_type}: {e}")
+            print("Використовуємо простий алгоритм")
             self.model = "simple"
+            self.model_loaded = False
 
     def simple_depth_estimation(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
